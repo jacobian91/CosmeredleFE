@@ -271,8 +271,12 @@
 }
 
 .rules-modal {
-  width: 80%;
   top: 50%;
+}
+
+.rules-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .rules-text {
@@ -300,14 +304,6 @@
 }
 
 @media only screen and (min-width: 1080px) {
-  .modal-content {
-    width: 20%;
-  }
-
-  .rules-modal {
-    width: 80%
-  }
-
   .guess-results {
     margin-bottom: 1%;
   }
@@ -321,9 +317,10 @@
   .game-timer {
     margin-top: 1vmin;
   }
+}
 
-  .example-img {
-    width: 8vmin;
-    height: 8vmin;
+@media only screen and (min-width: 1600px) {
+  .rules-modal{
+    width: 40%
   }
 }
