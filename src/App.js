@@ -7,7 +7,6 @@ import Guessbox from "./Component/Guessbox";
 import GameWonModal from "./Component/GameWonModal";
 import NewGameAlertModal from "./Component/NewGameAlertModal";
 import RulesModal from "./Component/RulesModal";
-import backgroundVideo from "./background.mp4";
 
 function App() {
   const [characterList, setCharacterList] = useState("");
@@ -229,9 +228,7 @@ function App() {
 
   return (
     <div className="App">
-      <video autoPlay loop muted className="background-video">
-        <source src={backgroundVideo} />
-      </video>
+      <img className="background-img" src="/images/CosmeredleBackground.png" alt="Cosmere constellation background"/>
       <header className="App-header">
         <h1 className="header-txt">Cosmeredle</h1>
       </header>

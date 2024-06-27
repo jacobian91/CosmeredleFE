@@ -9,7 +9,6 @@ export default function RulesModal() {
 
   return (
     <>
-      <div>
         <button className="rules-btn" onClick={toggleModal}>
           ?
         </button>
@@ -37,7 +36,6 @@ export default function RulesModal() {
             </div>
           </div>
         )}
-      </div>
     </>
   );
 }
