@@ -5,7 +5,7 @@ export default function GameWonModal({ character, hours, minutes, seconds, guess
     <>
       <div>
         <div className="modal-overlay"/>
-        <div className="modal-content">
+        <div className="modal-content game-won-modal">
           <h1 className="modal-title">Congratulations!</h1>
           <p className="modal-text">
             The correct character was <a className="external-link" href={`https://coppermind.net/wiki/${character}`}>{character}.</a>

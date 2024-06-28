@@ -18,6 +18,7 @@ export default function RulesModal() {
             <div className="modal-content rules-modal">
               <h1 className="modal-title">How to play</h1>
               <div className="modal-text rules-text">
+                <span>Try to guess a different Cosmere character every day by using the hints given.</span>
                 <span><span className="incorrect-text">Red</span> = Guess is incorrect</span>
                 <br/>
                   <span><span className="partial-text">Orange</span> = Guess is partially correct (only applies to species and abilities/investiture) e.g.</span>
@@ -35,6 +36,8 @@ export default function RulesModal() {
                 <span><span className="correct-text">Green</span> = Guess is correct</span>
                 <br/>
                 <span>All information is taken from <a className="external-link" href="https://coppermind.net">Coppermind</a></span>
+                <br/>
+                <span>Inspired by <a className="external-link" href="https://loldle.net/">LoLdle</a> and <a className="external-link" href="https://smidle.net/">Smidle</a></span>
               </div>
             </div>
           </div>

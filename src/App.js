@@ -238,7 +238,7 @@ function App() {
             <Autocompletecharacters
               className="autocomplete-search"
               onChange={autocompleteChange}
-              characters={characterList.names}
+              characters={characterList.names.sort()}
               guesses={guessList.map((value) => value.name[0])}
               disabled={gameWon}
             />
@@ -261,19 +261,19 @@ function App() {
       </div>
       <div className="title-wrapper">
         <div className="guess-title">
-          <h3>Name</h3>
+          <h3 className="title-text">Name</h3>
         </div>
         <div className="guess-title">
-          <h3>Home World</h3>
+          <h3 className="title-text">Home World</h3>
         </div>
         <div className="guess-title">
-          <h3>First Appearance</h3>
+          <h3 className="title-text">First Appearance</h3>
         </div>
         <div className="guess-title">
-          <h3>Species</h3>
+          <h3 className="title-text">Species</h3>
         </div>
         <div className="guess-title">
-          <h3>Abilities/ Investiture</h3>
+          <h3 className="title-text">Abilities/ Investiture</h3>
         </div>
       </div>
       <div className="guesses-wrapper">
@@ -321,6 +321,11 @@ function App() {
       </div>
       <div>
         <RulesModal/>
+      </div>
+      <div className="kofi-btn">
+        <a className="kofi-link" href="https://ko-fi.com/kelvinprussia">
+          <img className="kofi-img" src="/images/kofi_logo.png" alt="Kofi logo"/>
+        </a>
       </div>
       {/* vvvvvv DEV ONLY vvvvvv */}
       {/* <div>
