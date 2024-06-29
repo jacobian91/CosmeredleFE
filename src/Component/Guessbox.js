@@ -1,4 +1,4 @@
-export default function GuessBox({ guess }) {
+export default function GuessBox({ guess, isLatestGuess }) {
   const getResultClass = (value) => {
     switch (value) {
       case 0:
@@ -13,7 +13,7 @@ export default function GuessBox({ guess }) {
   };
 
   return (
-    <div className="guess-results">
+    <div className={`guess-results ${isLatestGuess ? 'latest-guess-results' : ''}`}>
       <div className={`guess-box ${getResultClass(guess.name[1])}`}>
         <h3 className="guess-text">{guess.name[0]}</h3>
       </div>

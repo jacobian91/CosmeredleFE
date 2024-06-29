@@ -94,6 +94,17 @@
   font-size: calc(6px + 1vmin);
 }
 
+.latest-guess-results .guess-box {
+  animation: FadeIn 0.5s linear;
+  animation-fill-mode: both;
+}
+
+.latest-guess-results .guess-box:nth-child(1) { animation-delay: .1s }
+.latest-guess-results .guess-box:nth-child(2) { animation-delay: .2s }
+.latest-guess-results .guess-box:nth-child(3) { animation-delay: .3s }
+.latest-guess-results .guess-box:nth-child(4) { animation-delay: .4s }
+.latest-guess-results .guess-box:nth-child(5) { animation-delay: .5s }
+
 .guess-text {
   margin-block: 1vmin;
 }
@@ -154,7 +165,8 @@
   color: white;
   border-radius: 4px;
   background-color: #282c34;
-  border: 1px solid #E1C362
+  border: 1px solid #E1C362;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .guess-btn:hover {
@@ -162,10 +174,12 @@
   color: #E1C362;
 }
 
-.guess-btn:disabled {
+.guess-btn:disabled,
+.guess-btn:disabled:hover{
   background-color: grey;
   color: black;
   border-color: #1c1e22;
+  cursor: not-allowed;
 }
 
 .modal-overlay {
@@ -183,7 +197,7 @@
 
 .modal-content {
   position: absolute;
-  top: 30%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
@@ -251,9 +265,6 @@
 
 .rules-btn:hover {
   cursor: pointer;
-}
-
-.guess-btn:hover {
   background-color: #2c2f34;
   color: #E1C362;
 }
@@ -315,12 +326,20 @@
   right: 2vmin;
   width: 8vmin;
   height: 8vmin;
-  border-radius: 4vmin;
 }
 
 .kofi-img {
   height: 100%;
   width: 100%;
+}
+
+.kofi-btn:hover {
+  transform: scale(1.125);
+}
+
+.modal-delay {
+  animation: Delay 2s linear(0 0%, 0 65%, 1 100%);
+  animation-fill-mode: both;
 }
 
 @media only screen and (min-width: 1080px) {
@@ -356,5 +375,29 @@
 @media only screen and (min-width: 1600px) {
   .rules-modal{
     width: 40%;
+  }
+}
+
+@keyframes FadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(.1)
+  }
+  85% {
+    opacity: 1;
+    transform: scale(1.03)
+  }
+  100% {
+    transform: scale(1)
+  }
+}
+
+@keyframes Delay {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

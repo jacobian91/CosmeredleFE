@@ -212,10 +212,6 @@ function App() {
     // eslint-disable-next-line
   }, [seconds])
 
-  // function setDate() {
-  //   setPlayDate("Mon Apr 22 2024");
-  // };
-
   function copyEmail() {
     const copyText = "cosmeredle@gmail.com"
     navigator.clipboard.writeText(copyText);
@@ -281,7 +277,7 @@ function App() {
           guessList
             .slice()
             .reverse()
-            .map((guess, index) => <Guessbox key={index} guess={guess} />)
+            .map((guess, index) => <Guessbox key={`${guess.name[0]}-${index}`} guess={guess} isLatestGuess={index === 0}/>)
         ) : (
           <div className="guess-results">
             <div className="guess-box">
@@ -327,19 +323,6 @@ function App() {
           <img className="kofi-img" src="/images/kofi_logo.png" alt="Kofi logo"/>
         </a>
       </div>
-      {/* vvvvvv DEV ONLY vvvvvv */}
-      {/* <div>
-        <p>
-          Game won: {localStorage.getItem("gameWon")} <br/>
-          guessList: {localStorage.getItem("guessList")}<br/>
-          guessCount: {localStorage.getItem("guessCount")}<br/>
-          correct char: {localStorage.getItem("correctChar")}<br/>
-          play date: {localStorage.getItem("playDate")}
-        </p>
-      </div>
-      <button onClick={setDate}>set date</button>
-      <button onClick={() => localStorage.clear()}>Clear localStorage</button> */}
-      {/* ^^^^^^ DEV ONLY ^^^^^^ */}
       <footer className="App-footer">
         <div className="footer-info footer-1">
           Contact: <Tooltip 
