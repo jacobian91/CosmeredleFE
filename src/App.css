@@ -24,6 +24,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000;
 }
 
 .footer-info {
@@ -326,6 +327,7 @@
   right: 2vmin;
   width: 8vmin;
   height: 8vmin;
+  z-index: 1000;
 }
 
 .kofi-img {
