@@ -9,7 +9,6 @@ import NewGameAlertModal from "./Component/NewGameAlertModal";
 import RulesModal from "./Component/RulesModal";
 
 function App() {
-  console.log('Environment:', process.env.NODE_ENV);
   const [characterList, setCharacterList] = useState("");
   const [selectedCharacter, setSelectedCharacter] = useState("");
   const [timeRemaining, setTimeRemaining] = useState(calcTimeRemaining());
