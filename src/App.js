@@ -58,7 +58,7 @@ function App() {
     if (Object.values(guess).every((value) => value[1] === 2)) {
       setCorrectChar(guess["name"][0]);
       setGameWon(true);
-      setPlayDate(new Date().toDateString());
+      setPlayDate(new Date().toISOString().split('T')[0]);
     }
   };
 
@@ -135,12 +135,13 @@ function App() {
   }
 
   function resetGame() {
+    console.log("Reset Game")
     localStorage.clear();
     setGuessList([]); 
     setGuessCount(0); 
     setGameWon(false);
     setCorrectChar(""); 
-    setPlayDate(new Date().toDateString()); 
+    setPlayDate(new Date().toISOString().split('T')[0]); 
     setSelectedCharacter("");
   }
   
@@ -154,15 +155,18 @@ function App() {
   useEffect(() => {
     getCharacterList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, []); //No dependency due to only running on initial render
 
   useEffect(() => {
-    let date = new Date().toDateString();
-    if (new Date(playDate).toDateString() !== date) {
+    // let currDate = new Date().toUTCString();
+    let currDate = new Date().toISOString().split('T')[0];
+    console.log("Current Date:", currDate);
+    console.log("Playe Date:", playDate);
+    if (playDate !== currDate) {
       resetGame();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) //No dependency due to only running on initial render
+  }, []); //No dependency due to only running on initial render
 
   useEffect(() => {
     localStorage.setItem("guessList", JSON.stringify(guessList));
@@ -209,8 +213,8 @@ function App() {
 
   useEffect(() => {
     checkNewGame(hours, minutes, seconds);
-    // eslint-disable-next-line
-  }, [seconds])
+    // eslint-disable-next-line 
+  }, [seconds]) // Updates when seconds changes
 
   function copyEmail() {
     const copyText = "cosmeredle@gmail.com"
