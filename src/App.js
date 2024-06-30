@@ -158,10 +158,7 @@ function App() {
   }, []); //No dependency due to only running on initial render
 
   useEffect(() => {
-    // let currDate = new Date().toUTCString();
     let currDate = new Date().toISOString().split('T')[0];
-    console.log("Current Date:", currDate);
-    console.log("Playe Date:", playDate);
     if (playDate !== currDate) {
       resetGame();
     }
