@@ -173,6 +173,7 @@
 .guess-btn:hover {
   background-color: #2c2f34;
   color: #E1C362;
+  cursor: pointer;
 }
 
 .guess-btn:disabled,
@@ -344,6 +345,24 @@
   animation-fill-mode: both;
 }
 
+.give-up-btn {
+  margin-top: 1.5vmin;
+  color: white;
+  border-radius: 4px;
+  background-color: #282c34;
+  border: 1px solid #E1C362;
+  font-size: calc(8px + 1vmin);
+  padding: 1vmin;
+  padding-inline: 2vmin;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.give-up-btn:hover {
+  background-color: #2c2f34;
+  color: #E1C362;
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 1080px) {
   .guess-results {
     margin-bottom: 1%;
@@ -370,6 +389,10 @@
   }
 
   .game-won-modal {
+    width: 30%
+  }
+
+  .give-up-modal {
     width: 30%
   }
 }

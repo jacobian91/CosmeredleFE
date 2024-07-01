@@ -7,6 +7,7 @@ import Guessbox from "./Component/Guessbox";
 import GameWonModal from "./Component/GameWonModal";
 import NewGameAlertModal from "./Component/NewGameAlertModal";
 import RulesModal from "./Component/RulesModal";
+import GiveUpModal from "./Component/GiveUpModal";
 
 function App() {
   const [characterList, setCharacterList] = useState("");
@@ -33,6 +34,10 @@ function App() {
     const storedPlayDate = localStorage.getItem("playDate");
     return storedPlayDate ? storedPlayDate : "";
   });
+  const [gaveUp, setGaveUp] = useState(() => {
+    const storedGaveUp = localStorage.getItem("gaveUp");
+    return storedGaveUp ? JSON.parse(storedGaveUp) : false;
+  })
   const [openTooltip, setOpenTooltip] = useState(false);
 
   const api = axios.create({
@@ -135,7 +140,6 @@ function App() {
   }
 
   function resetGame() {
-    console.log("Reset Game")
     localStorage.clear();
     setGuessList([]); 
     setGuessCount(0); 
@@ -143,6 +147,23 @@ function App() {
     setCorrectChar(""); 
     setPlayDate(new Date().toISOString().split('T')[0]); 
     setSelectedCharacter("");
+  }
+
+  function checkNewGame(hours, minutes, seconds) {
+    if (hours === "00" && minutes === "00" && seconds === "00") {
+      if (gameWon) {
+        resetGame();
+      } else {
+        getCorrectChar();
+        setNewGame(true);
+      }
+    }
+  }
+
+  function giveUp() {
+    setGaveUp(true);
+    setSelectedCharacter("");
+    getCorrectChar();
   }
   
   useEffect(() => {
@@ -185,6 +206,10 @@ function App() {
     localStorage.setItem("playDate", playDate);
   }, [playDate]);
 
+  useEffect (() => {
+    localStorage.setItem("gaveUp", JSON.stringify(gaveUp));
+  }, [gaveUp]);
+
   const hours = String(
     Math.floor((timeRemaining / (1000 * 60 * 60)) % 24)
   ).padStart(2, "0");
@@ -197,16 +222,6 @@ function App() {
     "0"
   );
 
-  function checkNewGame(hours, minutes, seconds) {
-    if (hours === "00" && minutes === "00" && seconds === "00") {
-      if (gameWon) {
-        resetGame();
-      } else {
-        getCorrectChar();
-        setNewGame(true);
-      }
-    }
-  }
 
   useEffect(() => {
     checkNewGame(hours, minutes, seconds);
@@ -251,6 +266,11 @@ function App() {
           </button>
         </div>
       </div>
+      {guessCount >= 5 && (<div>
+        <button className="give-up-btn" onClick={giveUp}>
+          Give up?
+        </button>
+      </div>)}
       <div>
         <p className="game-timer">
           New round in {hours}:{minutes}:{seconds}
@@ -318,6 +338,17 @@ function App() {
       </div>
       <div>
         <RulesModal/>
+      </div>
+      <div>
+        {gaveUp && (
+          <GiveUpModal
+          gaveUp= {gaveUp }
+          character={correctChar}
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          />
+        )}
       </div>
       <div className="kofi-btn">
         <a className="kofi-link" href="https://ko-fi.com/kelvinprussia">
