@@ -147,6 +147,7 @@ function App() {
     setCorrectChar(""); 
     setPlayDate(new Date().toISOString().split('T')[0]); 
     setSelectedCharacter("");
+    setGaveUp(false);
   }
 
   function checkNewGame(hours, minutes, seconds) {
