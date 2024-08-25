@@ -108,18 +108,31 @@
 
 .guess-text {
   margin-block: 1vmin;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black
 }
 
 .guess-right {
   background-color: darkolivegreen;
 }
 
+.guess-right-cb {
+  background-color: rgb(56, 213, 213);
+}
+
 .guess-partial {
   background-color: darkgoldenrod;
 }
 
+.guess-partial-cb {
+  background-color: rgb(177, 94, 177);
+}
+
 .guess-wrong {
   background-color: darkred;
+}
+
+.guess-wrong-cb {
+  background-color: rgb(123, 119, 119);
 }
 
 .autocomplete-wrapper .MuiAutocomplete-inputRoot,
@@ -253,9 +266,6 @@
 }
 
 .rules-btn {
-  position: fixed;
-  top: 2.5vmin;
-  left: 2vmin;
   width: 8vmin;
   height: 8vmin;
   color: white;
@@ -271,16 +281,52 @@
   color: #E1C362;
 }
 
+.settings-btn {
+  width: 8vmin;
+  height: 8vmin;
+  color: white;
+  border-radius: 4vmin;
+  background-color: #282c34;
+  background-image: url("../public/images/settingsInactive.png");
+  background-size: contain;
+  border: 2px solid #E1C362;
+  font-size: 3vmin;
+}
+
+.settings-btn:hover {
+  background-image: url("../public/images/settingsActive.png");
+}
+
+.menus {
+  position: fixed;
+  top: 2.5vmin;
+  left: 4vmin;
+  display: flex;
+  gap: 1vmin;
+}
+
 .incorrect-text {
   color: darkred;
+}
+
+.incorrect-text-cb {
+  color: rgb(123, 119, 119);
 }
 
 .correct-text {
   color: darkolivegreen;
 }
 
+.correct-text-cb {
+  color: rgb(56, 213, 213);
+}
+
 .partial-text {
   color: darkgoldenrod;
+}
+
+.partial-text-cb {
+  color: rgb(177, 94, 177);
 }
 
 .example-img {
@@ -374,6 +420,12 @@
     border-radius: 3vmin;
   }
 
+  .settings-btn {
+    width: 6vmin;
+    height: 6vmin;
+    border-radius: 3vmin;
+  }
+
   .kofi-btn {
     width: 6vmin;
     height: 6vmin;
@@ -384,21 +436,13 @@
     margin-top: 1vmin;
   }
 
-  .game-over-modal{
+  .game-over-modal .game-won-modal .give-up-modal{
     width: 30%;
-  }
-
-  .game-won-modal {
-    width: 30%
-  }
-
-  .give-up-modal {
-    width: 30%
   }
 }
 
 @media only screen and (min-width: 1600px) {
-  .rules-modal{
+  .modal-content{
     width: 40%;
   }
 }

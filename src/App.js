@@ -8,12 +8,17 @@ import GameWonModal from "./Component/GameWonModal";
 import NewGameAlertModal from "./Component/NewGameAlertModal";
 import RulesModal from "./Component/RulesModal";
 import GiveUpModal from "./Component/GiveUpModal";
+import SettingsModal from "./Component/SettingsModal";
 
 function App() {
   const [characterList, setCharacterList] = useState("");
   const [selectedCharacter, setSelectedCharacter] = useState("");
   const [timeRemaining, setTimeRemaining] = useState(calcTimeRemaining());
   const [newGame, setNewGame] = useState(false);
+  const [openTooltip, setOpenTooltip] = useState(false);
+  const [showRulesModal, setShowRulesModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [blockGuess, setBlockGuess] = useState(false);
   const [gameWon, setGameWon] = useState(() => {
     const storedWin = localStorage.getItem("gameWon");
     return storedWin ? JSON.parse(storedWin) : false;
@@ -38,7 +43,10 @@ function App() {
     const storedGaveUp = localStorage.getItem("gaveUp");
     return storedGaveUp ? JSON.parse(storedGaveUp) : false;
   })
-  const [openTooltip, setOpenTooltip] = useState(false);
+  const [colourblindMode, setColourblindMode] = useState(() => {
+    const storedColourblindMode = localStorage.getItem("colourblindMode");
+    return storedColourblindMode ? JSON.parse(storedColourblindMode) : false;
+  })
 
   const api = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
@@ -50,6 +58,12 @@ function App() {
   const autocompleteChange = (event, value) => {
     setSelectedCharacter(value);
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' && selectedCharacter) {
+      makeGuess();
+    }
+  }
 
   const addGuess = (newGuess) => {
     setGuessList((prevGuessList) => [...prevGuessList, newGuess]);
@@ -66,6 +80,18 @@ function App() {
       setPlayDate(new Date().toISOString().split('T')[0]);
     }
   };
+
+  const hours = String(
+    Math.floor((timeRemaining / (1000 * 60 * 60)) % 24)
+  ).padStart(2, "0");
+  const minutes = String(Math.floor((timeRemaining / 1000 / 60) % 60)).padStart(
+    2,
+    "0"
+  );
+  const seconds = String(Math.floor((timeRemaining / 1000) % 60)).padStart(
+    2,
+    "0"
+  ); 
 
   function getCharacterList() {
     api("/list")
@@ -85,6 +111,7 @@ function App() {
   }
 
   function makeGuess() {
+    setBlockGuess(true);
     api("/guess/" + selectedCharacter)
       .then((response) => {
         const res = response.data;
@@ -99,6 +126,7 @@ function App() {
         updateGuessCount();
         setSelectedCharacter(null);
         checkGameWon(newGuess);
+        setBlockGuess(false);
       })
       .catch((error) => {
         if (error.response) {
@@ -140,7 +168,6 @@ function App() {
   }
 
   function resetGame() {
-    localStorage.clear();
     setGuessList([]); 
     setGuessCount(0); 
     setGameWon(false);
@@ -166,7 +193,29 @@ function App() {
     setSelectedCharacter("");
     getCorrectChar();
   }
-  
+
+  function toggleShowRulesModal() {
+    setShowRulesModal(!showRulesModal);
+  }
+
+  function toggleShowSettingsModal() {
+    setShowSettingsModal(!showSettingsModal);
+  }
+
+  function toggleColourBlindMode() {
+    setColourblindMode(!colourblindMode);
+  }
+
+  function copyEmail() {
+    const copyText = "cosmeredle@gmail.com"
+    navigator.clipboard.writeText(copyText);
+    setOpenTooltip(true);
+
+    setTimeout(() => {
+      setOpenTooltip(false);
+    }, 500);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeRemaining(calcTimeRemaining());
@@ -211,33 +260,14 @@ function App() {
     localStorage.setItem("gaveUp", JSON.stringify(gaveUp));
   }, [gaveUp]);
 
-  const hours = String(
-    Math.floor((timeRemaining / (1000 * 60 * 60)) % 24)
-  ).padStart(2, "0");
-  const minutes = String(Math.floor((timeRemaining / 1000 / 60) % 60)).padStart(
-    2,
-    "0"
-  );
-  const seconds = String(Math.floor((timeRemaining / 1000) % 60)).padStart(
-    2,
-    "0"
-  );
-
+  useEffect(() => {
+    localStorage.setItem("colourblindMode", JSON.stringify(colourblindMode));
+  }, [colourblindMode]);
 
   useEffect(() => {
     checkNewGame(hours, minutes, seconds);
     // eslint-disable-next-line 
   }, [seconds]) // Updates when seconds changes
-
-  function copyEmail() {
-    const copyText = "cosmeredle@gmail.com"
-    navigator.clipboard.writeText(copyText);
-    setOpenTooltip(true);
-
-    setTimeout(() => {
-      setOpenTooltip(false);
-    }, 500);
-  };
 
   return (
     <div className="App">
@@ -254,13 +284,14 @@ function App() {
               characters={characterList.names.sort()}
               guesses={guessList.map((value) => value.name[0])}
               disabled={gameWon}
+              onKeyDown={handleKeyDown}
             />
           ) : (
             <p>Loading Characters...</p>
           )}
           <button
             className="guess-btn"
-            disabled={!selectedCharacter}
+            disabled={!selectedCharacter || blockGuess}
             onClick={makeGuess}
           >
             Guess
@@ -299,7 +330,7 @@ function App() {
           guessList
             .slice()
             .reverse()
-            .map((guess, index) => <Guessbox key={`${guess.name[0]}-${index}`} guess={guess} isLatestGuess={index === 0}/>)
+            .map((guess, index) => <Guessbox key={`${guess.name[0]}-${index}`} guess={guess} isLatestGuess={index === 0} colourblindMode={colourblindMode}/>)
         ) : (
           <div className="guess-results">
             <div className="guess-box">
@@ -337,8 +368,12 @@ function App() {
           character={correctChar}
         />
       </div>
-      <div>
-        <RulesModal/>
+      <div className="menus">
+        <button className="settings-btn" onClick={toggleShowSettingsModal}>
+        </button>
+        <button className="rules-btn" onClick={toggleShowRulesModal}>
+            ?
+        </button>
       </div>
       <div>
         {gaveUp && (
@@ -350,6 +385,12 @@ function App() {
           seconds={seconds}
           />
         )}
+      </div>
+      <div>
+        {showRulesModal && (<RulesModal onClose={toggleShowRulesModal} colourblindMode={colourblindMode}/>)}
+      </div>
+      <div>
+        {showSettingsModal && (<SettingsModal onClose={toggleShowSettingsModal} colourblindMode={colourblindMode} toggleColourBlindMode={toggleColourBlindMode}/>)}
       </div>
       <div className="kofi-btn">
         <a className="kofi-link" href="https://ko-fi.com/kelvinprussia">

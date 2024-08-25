@@ -1,12 +1,24 @@
-export default function GuessBox({ guess, isLatestGuess }) {
+export default function GuessBox({ guess, isLatestGuess, colourblindMode }) {
   const getResultClass = (value) => {
     switch (value) {
       case 0:
-        return "guess-wrong";
+        if (colourblindMode) {
+          return "guess-wrong-cb"
+        } else {
+          return "guess-wrong";
+        } 
       case 1:
-        return "guess-partial";
+        if (colourblindMode) {
+          return "guess-partial-cb"
+        } else {
+          return "guess-partial";
+        } 
       case 2:
-        return "guess-right";
+        if (colourblindMode) {
+          return "guess-right-cb"
+        } else {
+          return "guess-right";
+        } 
       default:
         return "";
     }
