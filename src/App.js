@@ -9,15 +9,17 @@ import NewGameAlertModal from "./Component/NewGameAlertModal";
 import RulesModal from "./Component/RulesModal";
 import GiveUpModal from "./Component/GiveUpModal";
 import SettingsModal from "./Component/SettingsModal";
+import ChangelogModal from "./Component/ChangelogModal";
 
 function App() {
   const [characterList, setCharacterList] = useState("");
   const [selectedCharacter, setSelectedCharacter] = useState("");
   const [timeRemaining, setTimeRemaining] = useState(calcTimeRemaining());
   const [newGame, setNewGame] = useState(false);
-  const [openTooltip, setOpenTooltip] = useState(false);
+  const [openEmailTooltip, setOpenEmailTooltip] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showChangelogModal, setChangelogModal] = useState(false);
   const [blockGuess, setBlockGuess] = useState(false);
   const [gameWon, setGameWon] = useState(() => {
     const storedWin = localStorage.getItem("gameWon");
@@ -81,17 +83,9 @@ function App() {
     }
   };
 
-  const hours = String(
-    Math.floor((timeRemaining / (1000 * 60 * 60)) % 24)
-  ).padStart(2, "0");
-  const minutes = String(Math.floor((timeRemaining / 1000 / 60) % 60)).padStart(
-    2,
-    "0"
-  );
-  const seconds = String(Math.floor((timeRemaining / 1000) % 60)).padStart(
-    2,
-    "0"
-  ); 
+  const hours = String(Math.floor((timeRemaining / (1000 * 60 * 60)) % 24)).padStart(2, "0");
+  const minutes = String(Math.floor((timeRemaining / 1000 / 60) % 60)).padStart(2,"0");
+  const seconds = String(Math.floor((timeRemaining / 1000) % 60)).padStart(2,"0"); 
 
   function getCharacterList() {
     api("/list")
@@ -206,15 +200,44 @@ function App() {
     setColourblindMode(!colourblindMode);
   }
 
+  function toggleChangelogModal() {
+    setChangelogModal(!showChangelogModal);
+  }
+
   function copyEmail() {
     const copyText = "cosmeredle@gmail.com"
     navigator.clipboard.writeText(copyText);
-    setOpenTooltip(true);
+    setOpenEmailTooltip(true);
 
     setTimeout(() => {
-      setOpenTooltip(false);
+      setOpenEmailTooltip(false);
     }, 500);
   };
+
+  function generateShareIcons(guessList) {
+    let shareIcons = [];
+    guessList.forEach(guess => {
+      let shareLine = [];
+      for (let value in guess) {
+        switch (guess[value][1]) {
+          case 0:
+            shareLine.push("🟥")
+            break;
+          case 1:
+            shareLine.push("🟨")
+            break;
+          case 2:
+            shareLine.push("🟩")
+            break;
+          default:
+            return
+        }
+      }
+      shareIcons.push(shareLine);
+    })
+    // console.log(shareIcons);
+    return shareIcons;
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -298,11 +321,11 @@ function App() {
           </button>
         </div>
       </div>
-      {guessCount >= 5 && (<div>
-        <button className="give-up-btn" onClick={giveUp}>
-          Give up?
-        </button>
-      </div>)}
+        {guessCount >= 5 && (<div>
+          <button className="give-up-btn" onClick={giveUp}>
+            Give up?
+          </button>
+        </div>)}
       <div>
         <p className="game-timer">
           New round in {hours}:{minutes}:{seconds}
@@ -359,6 +382,7 @@ function App() {
             minutes={minutes}
             seconds={seconds}
             guessCount={guessCount}
+            guessResults={generateShareIcons(guessList)}
           />
         )}
       </div>
@@ -368,12 +392,37 @@ function App() {
           character={correctChar}
         />
       </div>
-      <div className="menus">
-        <button className="settings-btn" onClick={toggleShowSettingsModal}>
-        </button>
-        <button className="rules-btn" onClick={toggleShowRulesModal}>
-            ?
-        </button>
+      <div className="left-menus">
+        <Tooltip
+          title={<span className="tooltip">Settings</span>}
+          arrow
+          disableInteractive>
+          <button className="menu-btn settings-btn" onClick={toggleShowSettingsModal}/>
+        </Tooltip>
+        <Tooltip
+          title={<span className="tooltip">How to play</span>}
+          arrow
+          disableInteractive>
+          <button className="menu-btn rules-btn" onClick={toggleShowRulesModal}/>
+        </Tooltip>
+      </div>
+      <div className="right-menus">
+        <Tooltip
+          title={<span className="tooltip">What's new?</span>}
+          arrow
+          disableInteractive>
+          <button className="menu-btn changelog-btn" onClick={toggleChangelogModal}/>
+        </Tooltip>
+        <Tooltip
+          title={<span className="tooltip">Kofi</span>}
+          arrow
+          disableInteractive>
+          <div className="kofi-btn">
+            <a className="kofi-link" href="https://ko-fi.com/kelvinprussia">
+              <img className="kofi-img" src="/images/kofi_logo.png" alt="Kofi logo"/>
+            </a>
+          </div>
+        </Tooltip>
       </div>
       <div>
         {gaveUp && (
@@ -392,16 +441,13 @@ function App() {
       <div>
         {showSettingsModal && (<SettingsModal onClose={toggleShowSettingsModal} colourblindMode={colourblindMode} toggleColourBlindMode={toggleColourBlindMode}/>)}
       </div>
-      <div className="kofi-btn">
-        <a className="kofi-link" href="https://ko-fi.com/kelvinprussia">
-          <img className="kofi-img" src="/images/kofi_logo.png" alt="Kofi logo"/>
-        </a>
+      <div>
+        {showChangelogModal && (<ChangelogModal onClose={toggleChangelogModal}/>)}
       </div>
       <footer className="App-footer">
         <div className="footer-info footer-1">
           Contact: <Tooltip 
-                      className="copied-tooltip" 
-                      open={openTooltip} 
+                      open={openEmailTooltip} 
                       title="Copied!" 
                       placement="top" 
                       arrow 

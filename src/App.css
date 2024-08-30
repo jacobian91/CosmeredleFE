@@ -180,7 +180,6 @@
   border-radius: 4px;
   background-color: #282c34;
   border: 1px solid #E1C362;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 .guess-btn:hover {
@@ -197,6 +196,22 @@
   cursor: not-allowed;
 }
 
+.share-results-btn {
+  margin-top: 1vmin;
+  padding: 0.5vmin;
+  color: white;
+  border-radius: 4px;
+  background-color: #282c34;
+  border: 1px solid #E1C362;
+  font-size: calc(8px + 2vmin);
+}
+
+.share-results-btn:hover {
+  background-color: #2c2f34;
+  color: #E1C362;
+  cursor: pointer;
+}
+
 .modal-overlay {
   background: rgba(49,49,49,0.8);
   width: 100%;
@@ -211,24 +226,27 @@
 
 
 .modal-content {
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   line-height: 1.4;
   background: #282c34;
   padding: 1rem 2rem;
   width: 60%;
   height: auto;
+  max-height: 75%;
   z-index: 1000;
   border: 2px solid #E1C362;
   border-radius: 0.8rem;
+  overflow: auto;
 }
 
 .modal-title {
   margin-top: 0;
   text-decoration: underline;
-  font-size: calc(16px + 2vmin);;
+  font-size: calc(16px + 2vmin);
+  color: #E1C362;
 }
 
 .modal-text {
@@ -265,42 +283,43 @@
   z-index: -10;
 }
 
-.rules-btn {
-  width: 8vmin;
-  height: 8vmin;
-  color: white;
-  border-radius: 4vmin;
-  background-color: #282c34;
-  border: 2px solid #E1C362;
-  font-size: 3vmin;
-}
-
-.rules-btn:hover {
-  cursor: pointer;
-  background-color: #2c2f34;
-  color: #E1C362;
-}
-
 .settings-btn {
-  width: 8vmin;
-  height: 8vmin;
-  color: white;
-  border-radius: 4vmin;
-  background-color: #282c34;
   background-image: url("../public/images/settingsInactive.png");
   background-size: contain;
-  border: 2px solid #E1C362;
-  font-size: 3vmin;
 }
 
 .settings-btn:hover {
   background-image: url("../public/images/settingsActive.png");
 }
 
-.menus {
+.menu-btn {
+  width: 8vmin;
+  height: 8vmin;
+  color: white;
+  border-radius: 4vmin;
+  background-color: #282c34;
+  border: 2px solid #E1C362;
+  font-size: 3vmin;
+}
+
+.menu-btn:hover {
+  cursor: pointer;
+  background-color: #2c2f34;
+  color: #E1C362;
+}
+
+.left-menus {
   position: fixed;
   top: 2.5vmin;
   left: 4vmin;
+  display: flex;
+  gap: 1vmin;
+}
+
+.right-menus {
+  position: fixed;
+  top: 2.5vmin;
+  right: 4vmin;
   display: flex;
   gap: 1vmin;
 }
@@ -334,10 +353,6 @@
   height: 15vmin;
 }
 
-.rules-modal {
-  top: 50%;
-}
-
 .rules-text {
   display: flex;
   flex-direction: column;
@@ -369,9 +384,6 @@
 }
 
 .kofi-btn {
-  position: fixed;
-  top: 2.5vmin;
-  right: 2vmin;
   width: 8vmin;
   height: 8vmin;
   z-index: 1000;
@@ -386,11 +398,6 @@
   transform: scale(1.125);
 }
 
-.modal-delay {
-  animation: Delay 2s linear;
-  animation-fill-mode: both;
-}
-
 .give-up-btn {
   margin-top: 1.5vmin;
   color: white;
@@ -400,7 +407,6 @@
   font-size: calc(8px + 1vmin);
   padding: 1vmin;
   padding-inline: 2vmin;
-  transition: background-color 0.3s, color 0.3s;
 }
 
 .give-up-btn:hover {
@@ -409,24 +415,51 @@
   cursor: pointer;
 }
 
+.tooltip {
+  font-size: calc(4px + 1vmin);
+}
+
+.changelog-list {
+  padding-left: 2vmin;
+}
+
+.changelog-item {
+  text-align: left;
+}
+
+.changelog-heading {
+  color: #E1C362;
+  list-style-type: none;
+}
+
+.changelog-date {
+  font-size: calc(12px + 2vmin);
+}
+
+.rules-btn {
+  background-image: url("../public/images/rulesInactive.png");
+  background-size: contain;
+}
+
+.rules-btn:hover {
+  background-image: url("../public/images/rulesActive.png");
+}
+
+.changelog-btn {
+  background-image: url("../public/images/changelogInactive.png");
+  background-size: contain;
+}
+
+.changelog-btn:hover {
+  background-image: url("../public/images/changelogActive.png");
+}
+
 @media only screen and (min-width: 1080px) {
   .guess-results {
     margin-bottom: 1%;
   }
 
-  .rules-btn {
-    width: 6vmin;
-    height: 6vmin;
-    border-radius: 3vmin;
-  }
-
-  .settings-btn {
-    width: 6vmin;
-    height: 6vmin;
-    border-radius: 3vmin;
-  }
-
-  .kofi-btn {
+  .menu-btn, .kofi-btn {
     width: 6vmin;
     height: 6vmin;
     border-radius: 3vmin;
@@ -436,7 +469,7 @@
     margin-top: 1vmin;
   }
 
-  .game-over-modal .game-won-modal .give-up-modal{
+  .modal-content{
     width: 30%;
   }
 }
