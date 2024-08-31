@@ -45,7 +45,7 @@ export default function GameWonModal({ character, hours, minutes, seconds, guess
               <button className="share-results-btn" onClick={copyShareText}>Click here to share!</button>
             </Tooltip>
           </p>
-          <button onClick={() => localStorage.clear()}>Clear localStorage</button>
+          {/* <button onClick={() => localStorage.clear()}>Clear localStorage</button> */}
           <p className="modal-timer">
             New round in {hours}:{minutes}:{seconds}
           </p>
