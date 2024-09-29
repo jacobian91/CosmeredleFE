@@ -5,7 +5,7 @@ export default function GameWonModal({ character, hours, minutes, seconds, guess
   const [openShareTooltip, setOpenShareTooltip] = useState(false);
 
   function copyShareText() {
-    let copyText = "I got todays wordle in " + guessCount + "!\n";
+    let copyText = "I got todays cosmerdle in " + guessCount + "!\n";
     
     guessResults.forEach(line => {
       copyText = copyText.concat(line.join(""), "\n\n");
