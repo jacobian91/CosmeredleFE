@@ -10,6 +10,7 @@ import RulesModal from "./Component/RulesModal";
 import GiveUpModal from "./Component/GiveUpModal";
 import SettingsModal from "./Component/SettingsModal";
 import ChangelogModal from "./Component/ChangelogModal";
+import DisclaimerModal from "./Component/DisclaimerModal";
 
 function App() {
   const [characterList, setCharacterList] = useState("");
@@ -20,6 +21,8 @@ function App() {
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showChangelogModal, setChangelogModal] = useState(false);
+  const [showGameWonModal, setGameWonModal] = useState(false);
+  const [showDisclaimerModal, setDisclaimerModal] = useState(false);
   const [blockGuess, setBlockGuess] = useState(false);
   const [gameWon, setGameWon] = useState(() => {
     const storedWin = localStorage.getItem("gameWon");
@@ -203,6 +206,14 @@ function App() {
   function toggleChangelogModal() {
     setChangelogModal(!showChangelogModal);
   }
+  
+  function toggleDisclaimerModal() {
+    setDisclaimerModal(!showDisclaimerModal);
+  }
+
+  function hideGameWonModal() {
+    setGameWonModal(false);
+  }
 
   function copyEmail() {
     const copyText = "cosmeredle@gmail.com"
@@ -265,6 +276,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("gameWon", JSON.stringify(gameWon));
+    setGameWonModal(true);
   }, [gameWon]);
 
   useEffect(() => {
@@ -375,7 +387,7 @@ function App() {
         )}
       </div>
       <div>
-        {gameWon && (
+        {showGameWonModal && (
           <GameWonModal
             character={correctChar}
             hours={hours}
@@ -383,6 +395,7 @@ function App() {
             seconds={seconds}
             guessCount={guessCount}
             guessResults={generateShareIcons(guessList)}
+            onClose={hideGameWonModal}
           />
         )}
       </div>
@@ -396,15 +409,18 @@ function App() {
         <Tooltip
           title={<span className="tooltip">Settings</span>}
           arrow
-          disableInteractive>
+          disableInteractive/>
           <button className="menu-btn settings-btn" onClick={toggleShowSettingsModal}/>
-        </Tooltip>
         <Tooltip
           title={<span className="tooltip">How to play</span>}
           arrow
-          disableInteractive>
+          disableInteractive/>
           <button className="menu-btn rules-btn" onClick={toggleShowRulesModal}/>
-        </Tooltip>
+        <Tooltip
+          title={<span className="tooltip">WaT Spoiler Disclaimer</span>}
+          arrow
+          disableInteractive/>
+          <button className="menu-btn disclaimer-btn" onClick={toggleDisclaimerModal}/>
       </div>
       <div className="right-menus">
         <Tooltip
@@ -443,6 +459,9 @@ function App() {
       </div>
       <div>
         {showChangelogModal && (<ChangelogModal onClose={toggleChangelogModal}/>)}
+      </div>
+      <div>
+        {showDisclaimerModal && (<DisclaimerModal onClose={toggleDisclaimerModal}/>)}
       </div>
       <footer className="App-footer">
         <div className="footer-info footer-1">

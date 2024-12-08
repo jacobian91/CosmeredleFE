@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material";
 import React, { useState } from "react";
 
-export default function GameWonModal({ character, hours, minutes, seconds, guessCount, guessResults}) {
+export default function GameWonModal({ character, hours, minutes, seconds, guessCount, guessResults, onClose}) {
   const [openShareTooltip, setOpenShareTooltip] = useState(false);
 
   function copyShareText() {
@@ -22,8 +22,9 @@ export default function GameWonModal({ character, hours, minutes, seconds, guess
   return (
     <>
       <div className="modal-delay">
-        <div className="modal-overlay"/>
+        <div className="modal-overlay" onClick={onClose}/>
         <div className="modal-content game-won-modal">
+          <img className="exit-btn" src="images/close.png" alt="Close pop-up" onClick={onClose}/>
           <h1 className="modal-title">Congratulations!</h1>
           <p className="modal-text">
             The correct character was <a className="external-link" href={`https://coppermind.net/wiki/${character}`}>{character}.</a>

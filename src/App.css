@@ -454,6 +454,18 @@
   background-image: url("../public/images/changelogActive.png");
 }
 
+.disclaimer-btn {
+  background-image: url("../public/images/Skybreakers_glyph.png");
+  background-size: contain;
+}
+
+.exit-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 5vmin;
+}
+
 @media only screen and (min-width: 1080px) {
   .guess-results {
     margin-bottom: 1%;
@@ -472,11 +484,19 @@
   .modal-content{
     width: 30%;
   }
+
+  .exit-btn{
+    width: 4vmin;
+  }
 }
 
 @media only screen and (min-width: 1600px) {
   .modal-content{
     width: 40%;
+  }
+
+  .exit-btn{
+    width: 4vmin;
   }
 }
 
