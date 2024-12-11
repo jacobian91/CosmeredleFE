@@ -222,6 +222,7 @@
   bottom: 0;
   position: fixed;
   z-index: 999;
+  
 }
 
 
@@ -239,7 +240,15 @@
   z-index: 1000;
   border: 2px solid #E1C362;
   border-radius: 0.8rem;
-  overflow: auto;
+  overflow: scroll;
+
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Edge */
 }
 
 .modal-title {

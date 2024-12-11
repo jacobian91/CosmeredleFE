@@ -6,6 +6,7 @@ const DisclaimerModal = ({onClose}) => {
           <div>
             <div className="modal-overlay" onClick={onClose} />
             <div className="modal-content disclaimer-modal">
+              <img className="exit-btn" src="images/close.png" alt="Close pop-up" onClick={onClose}/>
               <h1 className="modal-title">Spoiler Disclaimer</h1>
               <div className="modal-text disclaimer-text">
                 <p className="modal-text">

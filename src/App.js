@@ -22,7 +22,6 @@ function App() {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [showChangelogModal, setChangelogModal] = useState(false);
   const [showGameWonModal, setGameWonModal] = useState(false);
-  const [showDisclaimerModal, setDisclaimerModal] = useState(false);
   const [blockGuess, setBlockGuess] = useState(false);
   const [gameWon, setGameWon] = useState(() => {
     const storedWin = localStorage.getItem("gameWon");
@@ -52,6 +51,10 @@ function App() {
     const storedColourblindMode = localStorage.getItem("colourblindMode");
     return storedColourblindMode ? JSON.parse(storedColourblindMode) : false;
   })
+  const [showDisclaimerModal, setDisclaimerModal] = useState(() => {
+    const storedShowDisclaimer = localStorage.getItem("WaTDisclaimer");
+    return storedShowDisclaimer ? JSON.parse(storedShowDisclaimer) : true;
+  });
 
   const api = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
@@ -209,6 +212,7 @@ function App() {
   
   function toggleDisclaimerModal() {
     setDisclaimerModal(!showDisclaimerModal);
+    localStorage.setItem("WaTDisclaimer", JSON.stringify(false))
   }
 
   function hideGameWonModal() {
@@ -276,7 +280,7 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("gameWon", JSON.stringify(gameWon));
-    setGameWonModal(true);
+    setGameWonModal(gameWon);
   }, [gameWon]);
 
   useEffect(() => {
@@ -343,6 +347,7 @@ function App() {
           New round in {hours}:{minutes}:{seconds}
         </p>
       </div>
+      <button onClick={resetGame}>reset</button>
       <div className="title-wrapper">
         <div className="guess-title">
           <h3 className="title-text">Name</h3>

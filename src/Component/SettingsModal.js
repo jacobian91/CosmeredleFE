@@ -29,6 +29,7 @@ const SettingsModal = ({onClose, colourblindMode, toggleColourBlindMode}) => {
         <div>
           <div className="modal-overlay" onClick={onClose} />
           <div className="modal-content settings-modal">
+            <img className="exit-btn" src="images/close.png" alt="Close pop-up" onClick={onClose}/>
             <h1 className="modal-title">Settings</h1>
             <div className="modal-text settings-text">
                 <ColourblindLabel
