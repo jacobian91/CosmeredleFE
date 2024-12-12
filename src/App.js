@@ -347,7 +347,7 @@ function App() {
           New round in {hours}:{minutes}:{seconds}
         </p>
       </div>
-      <button onClick={resetGame}>reset</button>
+      {/* <button onClick={resetGame}>reset</button>  */}
       <div className="title-wrapper">
         <div className="guess-title">
           <h3 className="title-text">Name</h3>

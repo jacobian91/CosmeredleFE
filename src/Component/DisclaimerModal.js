@@ -13,7 +13,7 @@ const DisclaimerModal = ({onClose}) => {
                     Cosmeredle will not contain any spoilers for Wind and Truth until 28/2/2025 
                     <br/>
                     <br/>
-                    Hopefully this gives everyone (including me) enought time to read it while still enjoying Cosmeredle.
+                    Hopefully this gives everyone (including me) enough time to read it while still enjoying Cosmeredle.
                     <br/>
                     <br/>
                     Past this date, please be aware there may be spoilers if you still have not read it!
