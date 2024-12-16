@@ -8,7 +8,7 @@ export default function GameWonModal({ character, hours, minutes, seconds, guess
     let copyText = "I got todays cosmerdle in " + guessCount + "!\n";
     
     guessResults.forEach(line => {
-      copyText = copyText.concat(line.join(""), "\n\n");
+      copyText = copyText.concat(line.join(""), "\n");
     })
     copyText = copyText.concat("Try and beat me at https://cosmeredle.net/");
     navigator.clipboard.writeText(copyText);
