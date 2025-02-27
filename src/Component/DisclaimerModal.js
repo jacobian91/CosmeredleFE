@@ -10,13 +10,9 @@ const DisclaimerModal = ({onClose}) => {
               <h1 className="modal-title">Spoiler Disclaimer</h1>
               <div className="modal-text disclaimer-text">
                 <p className="modal-text">
-                    Cosmeredle will not contain any spoilers for Wind and Truth until 28/2/2025 
+                    Cosmeredle has been updated with information from Wind and Truth
                     <br/>
-                    <br/>
-                    Hopefully this gives everyone (including me) enough time to read it while still enjoying Cosmeredle.
-                    <br/>
-                    <br/>
-                    Past this date, please be aware there may be spoilers if you still have not read it!
+                    Please be careful of spoilers!
                 </p>
               </div>
             </div>

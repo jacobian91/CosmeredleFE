@@ -52,7 +52,7 @@ function App() {
     return storedColourblindMode ? JSON.parse(storedColourblindMode) : false;
   })
   const [showDisclaimerModal, setDisclaimerModal] = useState(() => {
-    const storedShowDisclaimer = localStorage.getItem("WaTDisclaimer");
+    const storedShowDisclaimer = localStorage.getItem("WaTSpoilerDisclaimer");
     return storedShowDisclaimer ? JSON.parse(storedShowDisclaimer) : true;
   });
 
@@ -212,7 +212,7 @@ function App() {
   
   function toggleDisclaimerModal() {
     setDisclaimerModal(!showDisclaimerModal);
-    localStorage.setItem("WaTDisclaimer", JSON.stringify(false))
+    localStorage.setItem("WaTSpoilerDisclaimer", JSON.stringify(false))
   }
 
   function hideGameWonModal() {
@@ -337,7 +337,7 @@ function App() {
           </button>
         </div>
       </div>
-        {guessCount >= 5 && (<div>
+        {guessCount >= 5 && gameWon === false && (<div>
           <button className="give-up-btn" onClick={giveUp}>
             Give up?
           </button>
@@ -421,11 +421,6 @@ function App() {
           arrow
           disableInteractive/>
           <button className="menu-btn rules-btn" onClick={toggleShowRulesModal}/>
-        <Tooltip
-          title={<span className="tooltip">WaT Spoiler Disclaimer</span>}
-          arrow
-          disableInteractive/>
-          <button className="menu-btn disclaimer-btn" onClick={toggleDisclaimerModal}/>
       </div>
       <div className="right-menus">
         <Tooltip
